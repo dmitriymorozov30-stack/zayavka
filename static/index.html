@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма заявки 2.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --header-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #cccccc;
+            --input-focus: #1a3a6b;
+            --table-border: #e0e0e0;
+            --table-hover: #f5f5f5;
+            --tab-bg: #f5f5f5;
+            --tab-active-bg: #1a3a6b;
+            --tab-active-text: #ffffff;
+            --tab-text: #333333;
+            --filter-bg: #f5f5f5;
+            --filter-active-bg: #1a3a6b;
+            --filter-active-text: #ffffff;
+            --filter-text: #333333;
+            --btn-primary: #1a3a6b;
+            --btn-primary-hover: #0f2a4d;
+            --btn-primary-text: #ffffff;
+            --btn-danger: #dc3545;
+            --btn-success: #28a745;
+            --btn-warning: #f5c518;
+            --btn-secondary: #6c757d;
+            --badge-bg: #1a3a6b;
+            --badge-text: #ffffff;
+            --modal-bg: #ffffff;
+            --modal-overlay: rgba(0,0,0,0.5);
+            --toast-bg: #1a3a6b;
+            --accent: #1a3a6b;
+            --accent-light: #e8eff7;
+            --timeline-border: #1a3a6b;
+            --timeline-dot: #1a3a6b;
+            --audit-comment-bg: #f5f5f5;
+            --archive-bg: #f9f9f9;
+            --archive-border: #e0e0e0;
+            --notif-dropdown-bg: #ffffff;
+            --notif-unread: #f0f7ff;
+            --status-new-bg: #fff3cd;
+            --status-new-text: #856404;
+            --status-progress-bg: #cce5ff;
+            --status-progress-text: #004085;
+            --status-approved-bg: #d4edda;
+            --status-approved-text: #155724;
+            --status-rejected-bg: #f8d7da;
+            --status-rejected-text: #721c24;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #404040;
+            --card-bg: #2d2d2d;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            --header-bg: #2d2d2d;
+            --input-bg: #333333;
+            --input-border: #555555;
+            --input-focus: #4a90d9;
+            --table-border: #404040;
+            --table-hover: #333333;
+            --tab-bg: #333333;
+            --tab-active-bg: #4a90d9;
+            --tab-active-text: #ffffff;
+            --tab-text: #c0c0c0;
+            --filter-bg: #333333;
+            --filter-active-bg: #4a90d9;
+            --filter-active-text: #ffffff;
+            --filter-text: #c0c0c0;
+            --btn-primary: #4a90d9;
+            --btn-primary-hover: #357abd;
+            --btn-primary-text: #ffffff;
+            --badge-bg: #4a90d9;
+            --badge-text: #ffffff;
+            --modal-bg: #2d2d2d;
+            --modal-overlay: rgba(0,0,0,0.7);
+            --toast-bg: #4a90d9;
+            --accent: #4a90d9;
+            --accent-light: #1e3a5f;
+            --timeline-border: #4a90d9;
+            --timeline-dot: #4a90d9;
+            --audit-comment-bg: #333333;
+            --archive-bg: #252525;
+            --archive-border: #404040;
+            --notif-dropdown-bg: #2d2d2d;
+            --notif-unread: #1e3a5f;
+            --status-new-bg: #78350f;
+            --status-new-text: #fbbf24;
+            --status-progress-bg: #1e3a8a;
+            --status-progress-text: #93c5fd;
+            --status-approved-bg: #064e3b;
+            --status-approved-text: #6ee7b7;
+            --status-rejected-bg: #7f1d1d;
+            --status-rejected-text: #fca5a5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.4;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 12px; }
+        .header {
+            background: var(--header-bg);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+        .header h1 {
+            color: var(--accent);
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header h1:hover { opacity: 0.7; }
+        .user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        .user-info .badge {
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .btn {
+            background: var(--btn-primary);
+            color: var(--btn-primary-text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { background: var(--btn-primary-hover); transform: translateY(-1px); }
+        .btn-danger { background: var(--btn-danger); color: white; }
+        .btn-success { background: var(--btn-success); color: white; }
+        .btn-secondary { background: var(--btn-secondary); color: white; }
+        .btn-warning { background: var(--btn-warning); color: #1a1a1a; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; }
+        .auth-container {
+            max-width: 420px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+        .auth-container h2 {
+            color: var(--accent);
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 22px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--input-focus);
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .auth-links { margin-top: 20px; text-align: center; color: var(--text-secondary); font-size: 13px; }
+        .auth-links a { color: var(--accent); text-decoration: none; cursor: pointer; }
+        .auth-links a:hover { text-decoration: underline; }
+        .app-content { display: none; }
+        .tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+        .tab {
+            background: var(--tab-bg);
+            color: var(--tab-text);
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .tab.active { background: var(--tab-active-bg); color: var(--tab-active-text); }
+        .tab:hover:not(.active) { background: var(--table-hover); }
+        .card {
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+        .card h3 {
+            color: var(--accent);
+            margin-bottom: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .filter-btn {
+            background: var(--filter-bg);
+            color: var(--filter-text);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .filter-btn.active { background: var(--filter-active-bg); color: var(--filter-active-text); border-color: transparent; }
+        .requests-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+        .requests-table th, .requests-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border);
+            color: var(--text-primary);
+        }
+        .requests-table th {
+            background: var(--accent-light);
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        .requests-table tr:hover { background: var(--table-hover); }
+        .requests-table tr.clickable { cursor: pointer; }
+        .status-badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; display: inline-block; text-transform: uppercase; }
+        .status-new { background: var(--status-new-bg); color: var(--status-new-text); }
+        .status-progress { background: var(--status-progress-bg); color: var(--status-progress-text); }
+        .status-approved { background: var(--status-approved-bg); color: var(--status-approved-text); }
+        .status-rejected { background: var(--status-rejected-bg); color: var(--status-rejected-text); }
+        .priority-high { color: #dc3545; font-weight: 600; }
+        .priority-medium { color: #fd7e14; }
+        .priority-low { color: #28a745; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--modal-overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--modal-bg);
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            color: var(--text-primary);
+        }
+        .modal h3 { color: var(--accent); margin-bottom: 16px; font-size: 18px; }
+        .modal p { margin-bottom: 12px; color: var(--text-secondary); }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        .audit-timeline { margin: 16px 0; padding-left: 16px; border-left: 2px solid var(--timeline-border); }
+        .audit-item { margin-bottom: 16px; position: relative; padding-left: 16px; }
+        .audit-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--timeline-dot);
+            border: 2px solid var(--card-bg);
+        }
+        .audit-item.success::before { background: #28a745; }
+        .audit-item.danger::before { background: #dc3545; }
+        .audit-time { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+        .audit-actor { font-weight: 600; color: var(--text-primary); font-size: 13px; }
+        .audit-action { color: var(--text-secondary); margin: 3px 0; font-size: 13px; }
+        .audit-comment {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            padding: 8px;
+            background: var(--audit-comment-bg);
+            border-radius: 4px;
+            border-left: 2px solid var(--accent);
+            font-size: 12px;
+        }
+        .archive-project {
+            background: var(--archive-bg);
+            border: 1px solid var(--archive-border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .archive-project:hover { border-color: var(--accent); }
+        .archive-project-info h4 { color: var(--text-primary); margin-bottom: 3px; font-size: 14px; }
+        .archive-project-info p { color: var(--text-secondary); font-size: 12px; margin-bottom: 6px; }
+        .notification-bell { position: relative; cursor: pointer; }
+        .notification-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 36px;
+            right: 0;
+            background: var(--notif-dropdown-bg);
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            min-width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            border: 1px solid var(--border-color);
+        }
+        .notification-dropdown.active { display: block; }
+        .notification-item { padding: 10px 14px; border-bottom: 1px solid var(--table-border); cursor: pointer; color: var(--text-primary); }
+        .notification-item:hover { background: var(--table-hover); }
+        .notification-item.unread { background: var(--notif-unread); border-left: 3px solid var(--accent); }
+        .notification-item .title { font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+        .notification-item .time { font-size: 11px; color: var(--text-secondary); }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--toast-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s;
+            font-size: 13px;
+        }
+        .toast.success { background: #28a745; }
+        .toast.error { background: #dc3545; }
+        .toast.info { background: var(--accent); }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        /* Статистика */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: var(--card-shadow);
+        }
+        .stat-card h4 { color: var(--text-secondary); font-size: 12px; text-transform: uppercase; margin-bottom: 8px; }
+        .stat-card .value { font-size: 24px; font-weight: 700; color: var(--accent); }
+        .stat-card .count { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .stat-card.approved { border-left: 4px solid #28a745; }
+        .stat-card.rejected { border-left: 4px solid #dc3545; }
+        .stat-card.progress { border-left: 4px solid #fd7e14; }
+        .stat-card.pending { border-left: 4px solid #1a3a6b; }
+        
+        .urgent-badge {
+            background: #dc3545;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 6px;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .requests-table { font-size: 11px; }
+            .requests-table th, .requests-table td { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="authContainer" class="auth-container">
+        <div id="loginForm">
+            <h2>🔐 Вход в систему</h2>
+            <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="user@stroisservis.ru"></div>
+            <div class="form-group"><label>Пароль</label><input type="password" id="loginPassword"></div>
+            <button class="btn" style="width:100%" onclick="login()">Войти</button>
+            <div class="auth-links"><a onclick="showForm('registerForm')">Регистрация</a> | <a onclick="showForm('forgotForm')">Забыли пароль?</a></div>
+        </div>
+        <div id="registerForm" style="display:none">
+            <h2>📝 Регистрация</h2>
+            <div class="form-group"><label>Имя</label><input type="text" id="regName"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="user@stroisservis.ru"></div>
+            <div class="form-group"><label>Пароль</label><input type="password" id="regPassword"></div>
+            <div class="form-group">
+                <label>Роль</label>
+                <select id="regRole">
+                    <option value="client">Клиент</option>
+                    <option value="procurement">Отдел снабжения</option>
+                    <option value="director">Руководитель</option>
+                </select>
+            </div>
+            <button class="btn" style="width:100%" onclick="register()">Зарегистрироваться</button>
+            <div class="auth-links"><a onclick="showForm('loginForm')">← Назад</a></div>
+        </div>
+        <div id="verifyForm" style="display:none">
+            <h2>🔐 Подтверждение email</h2>
+            <div class="form-group"><label>6-значный код</label><input type="text" id="verifyCode" maxlength="6" style="text-align:center;font-size:24px;letter-spacing:8px"></div>
+            <button class="btn" style="width:100%" onclick="verifyCode()">Подтвердить</button>
+            <div class="auth-links"><a onclick="showForm('loginForm')">← Назад</a></div>
+        </div>
+        <div id="forgotForm" style="display:none">
+            <h2>🔑 Восстановление пароля</h2>
+            <div class="form-group"><label>Email</label><input type="email" id="forgotEmail"></div>
+            <button class="btn" style="width:100%" onclick="forgotPassword()">Отправить код</button>
+            <div class="auth-links"><a onclick="showForm('loginForm')">← Назад</a></div>
+        </div>
+        <div id="resetForm" style="display:none">
+            <h2>🔑 Сброс пароля</h2>
+            <div class="form-group"><label>Email</label><input type="email" id="resetEmail"></div>
+            <div class="form-group"><label>Код</label><input type="text" id="resetCode" maxlength="6"></div>
+            <div class="form-group"><label>Новый пароль</label><input type="password" id="resetPassword"></div>
+            <button class="btn" style="width:100%" onclick="resetPassword()">Сменить пароль</button>
+            <div class="auth-links"><a onclick="showForm('loginForm')">← Назад</a></div>
+        </div>
+    </div>
+
+    <div id="appContent" class="app-content">
+        <div class="container">
+            <div class="header">
+                <h1 onclick="toggleTheme()">📋 Форма заявки 2.1</h1>
+                <div class="user-info">
+                    <div class="notification-bell" onclick="toggleNotifications()">
+                        <span class="material-icons">notifications</span>
+                        <span class="notification-count" id="notifCount" style="display:none">0</span>
+                        <div class="notification-dropdown" id="notifDropdown"></div>
+                    </div>
+                    <span id="userName"></span>
+                    <span class="badge" id="userRole"></span>
+                    <button class="btn btn-danger" onclick="logout()"><span class="material-icons">logout</span> Выйти</button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('requests', this)"><span class="material-icons">list_alt</span> Заявки</div>
+                <div class="tab" id="projectsTabBtn" onclick="switchTab('projects', this)"><span class="material-icons">folder</span> Проекты</div>
+                <div class="tab" onclick="switchTab('archive', this)" id="archiveTabBtn" style="display:none"><span class="material-icons">archive</span> Архив</div>
+                <div class="tab" onclick="switchTab('statistics', this)" id="statsTabBtn" style="display:none"><span class="material-icons">bar_chart</span> Статистика</div>
+                <div class="tab" onclick="switchTab('users', this)" id="usersTabBtn" style="display:none"><span class="material-icons">people</span> Пользователи</div>
+            </div>
+
+            <!-- ЗАЯВКИ -->
+            <div id="requestsContent">
+                <div class="card">
+                    <h3><span class="material-icons">add_circle</span> Новая заявка</h3>
+                    <div class="form-group"><label>Проект</label><select id="reqProject"></select></div>
+                    <div class="form-group"><label>Описание</label><textarea id="reqBody" placeholder="Что нужно закупить?"></textarea></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px">
+                        <div class="form-group">
+                            <label>Приоритет</label>
+                            <select id="reqPriority">
+                                <option value="low">Низкий</option>
+                                <option value="medium" selected>Средний</option>
+                                <option value="high">Высокий</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Срок</label><input type="date" id="reqDeadline"></div>
+                        <div class="form-group"><label>Ориентировочная стоимость (₽)</label><input type="number" id="reqCost" placeholder="0" min="0" step="0.01"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Исполнитель (Отдел снабжения)</label>
+                        <select id="reqExecutor"><option value="">— Не назначен —</option></select>
+                    </div>
+                    <button class="btn btn-success" onclick="createRequest()"><span class="material-icons">send</span> Отправить</button>
+                </div>
+
+                <div class="card">
+                    <h3><span class="material-icons">list</span> Все заявки</h3>
+                    <div class="filters">
+                        <button class="filter-btn active" onclick="setFilter('all', this)"><span class="material-icons" style="font-size:16px">view_list</span> Все</button>
+                        <button class="filter-btn" onclick="setFilter('in_progress', this)" id="filterInProgress" style="display:none"><span class="material-icons" style="font-size:16px">work</span> В работе</button>
+                    </div>
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>№</th><th>Проект</th><th>Автор</th><th>Исполнитель</th>
+                                <th>Описание</th><th>Стоимость</th><th>Статус</th><th>Срок</th><th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ПРОЕКТЫ -->
+            <div id="projectsContent" style="display:none">
+                <div class="card" id="createProjectCard">
+                    <h3><span class="material-icons">create_new_folder</span> Новый проект</h3>
+                    <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:15px;align-items:end">
+                        <div class="form-group" style="margin:0"><label>Название</label><input type="text" id="projName"></div>
+                        <div class="form-group" style="margin:0"><label>Срок</label><input type="date" id="projDeadline"></div>
+                        <button class="btn btn-success" onclick="createProject()">Создать</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3><span class="material-icons">folder_open</span> Активные проекты</h3>
+                    <table class="requests-table">
+                        <thead><tr><th>ID</th><th>Название</th><th>Срок</th><th>Создан</th><th>Действия</th></tr></thead>
+                        <tbody id="projectsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- АРХИВ -->
+            <div id="archiveContent" style="display:none">
+                <div class="card">
+                    <h3><span class="material-icons">archive</span> Архивные проекты</h3>
+                    <div id="archiveProjectsList"></div>
+                </div>
+            </div>
+
+            <!-- СТАТИСТИКА -->
+            <div id="statisticsContent" style="display:none">
+                <div class="card">
+                    <h3><span class="material-icons">bar_chart</span> Статистика заявок</h3>
+                    <div class="stats-grid" id="statsGrid"></div>
+                    <div id="statsDetails"></div>
+                </div>
+            </div>
+
+            <!-- ПОЛЬЗОВАТЕЛИ -->
+            <div id="usersContent" style="display:none">
+                <div class="card">
+                    <h3><span class="material-icons">people</span> Пользователи системы</h3>
+                    <table class="requests-table">
+                        <thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Статус</th><th>Действия</th></tr></thead>
+                        <tbody id="usersBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКИ -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <h3 id="confirmTitle">Подтверждение</h3>
+            <p id="confirmMessage"></p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('confirmModal')">Отмена</button>
+                <button class="btn btn-danger" id="confirmBtn">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal">
+            <h3>Изменить статус</h3>
+            <input type="hidden" id="statusReqId">
+            <div class="form-group"><label>Новый статус</label><select id="statusNew"></select></div>
+            <div class="form-group" id="directorCostGroup" style="display:none">
+                <label>Стоимость (₽) — финальная от руководителя</label>
+                <input type="number" id="directorCostInput" min="0" step="0.01" placeholder="0">
+            </div>
+            <div class="form-group"><label>Комментарий</label><textarea id="statusComment"></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('statusModal')">Отмена</button>
+                <button class="btn btn-success" onclick="updateStatus()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal">
+            <h3 id="detailsTitle">Детали заявки</h3>
+            <div id="detailsContent"></div>
+            <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal('detailsModal')">Закрыть</button></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API = '';
+        let token = localStorage.getItem('token');
+        let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+        let tempEmail = '';
+        let currentFilter = 'all';
+        let allRequests = [];
+        let archivedProjectIds = [];
+        let procurementUsers = [];
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? '' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+        window.onload = () => {
+            if (token && currentUser) showApp();
+            else showAuth();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reqDeadline').setAttribute('min', today);
+            document.getElementById('projDeadline').setAttribute('min', today);
+        };
+
+        function showForm(formId) {
+            ['loginForm','registerForm','verifyForm','forgotForm','resetForm'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById(formId).style.display = 'block';
+        }
+        function showAuth() { document.getElementById('authContainer').style.display = 'block'; document.getElementById('appContent').style.display = 'none'; }
+        
+        function showApp() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('appContent').style.display = 'block';
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = getRoleName(currentUser.role);
+            
+            // ✅ Скрываем "Проекты" для заказчика
+            if (currentUser.role === 'client') {
+                document.getElementById('projectsTabBtn').style.display = 'none';
+            }
+            
+            if (currentUser.role === 'procurement') {
+                document.getElementById('filterInProgress').style.display = 'inline-flex';
+            }
+            
+            if (currentUser.role === 'director') {
+                document.getElementById('archiveTabBtn').style.display = 'flex';
+                document.getElementById('statsTabBtn').style.display = 'flex';
+                document.getElementById('usersTabBtn').style.display = 'flex';
+            }
+            
+            loadProjects();
+            loadRequests();
+            loadNotifications();
+            loadArchivedProjectIds();
+            loadProcurementUsers();
+        }
+
+        function getRoleName(role) {
+            return {client: 'Клиент', procurement: 'Отдел снабжения', director: 'Руководитель'}[role] || role;
+        }
+
+        async function loadProcurementUsers() {
+            try {
+                const res = await fetch(`${API}/users/procurement`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                procurementUsers = data.users;
+                const select = document.getElementById('reqExecutor');
+                select.innerHTML = '<option value="">— Не назначен —</option>' + 
+                    data.users.map(u => `<option value="${u.id}">${u.name} (${u.email})</option>`).join('');
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadArchivedProjectIds() {
+            try {
+                const res = await fetch(`${API}/projects/archive`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                archivedProjectIds = data.projects.map(p => p.id);
+                renderRequests();
+            } catch (e) { console.error(e); }
+        }
+
+        // ===== AUTH =====
+        async function register() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const role = document.getElementById('regRole').value;
+            if (!name || !email || !password) return toast('Заполните все поля', 'error');
+            try {
+                const res = await fetch(`${API}/register`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: email, password, role, name})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                tempEmail = email;
+                toast('Код отправлен', 'success');
+                showForm('verifyForm');
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        async function verifyCode() {
+            const code = document.getElementById('verifyCode').value.trim();
+            if (code.length !== 6) return toast('Введите 6-значный код', 'error');
+            try {
+                const res = await fetch(`${API}/verify`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: tempEmail, code})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Подтверждено!', 'success');
+                showForm('loginForm');
+                document.getElementById('loginEmail').value = tempEmail;
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        async function login() {
+            const username = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            if (!username || !password) return toast('Заполните все поля', 'error');
+            try {
+                const res = await fetch(`${API}/login`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username, password})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                token = data.access_token;
+                currentUser = data.user;
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                toast('Добро пожаловать!', 'success');
+                showApp();
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        async function forgotPassword() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            if (!email) return toast('Введите email', 'error');
+            try {
+                const res = await fetch(`${API}/forgot-password`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Код отправлен', 'success');
+                document.getElementById('resetEmail').value = email;
+                showForm('resetForm');
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        async function resetPassword() {
+            const email = document.getElementById('resetEmail').value.trim();
+            const code = document.getElementById('resetCode').value.trim();
+            const new_password = document.getElementById('resetPassword').value;
+            if (!email || code.length !== 6 || !new_password) return toast('Заполните все поля', 'error');
+            try {
+                const res = await fetch(`${API}/reset-password`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email, code, new_password})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Пароль изменён!', 'success');
+                showForm('loginForm');
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        function logout() {
+            token = null; currentUser = null;
+            localStorage.removeItem('token'); localStorage.removeItem('user');
+            showAuth(); showForm('loginForm');
+        }
+
+        // ===== PROJECTS =====
+        async function loadProjects() {
+            try {
+                const res = await fetch(`${API}/projects`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                document.getElementById('reqProject').innerHTML = data.projects.map(p => `<option value="${p.id}">${p.name}</option>`).join('') || '<option disabled>Нет проектов</option>';
+                
+                // ✅ Скрываем блок создания проекта для клиента
+                const createCard = document.getElementById('createProjectCard');
+                if (currentUser.role === 'client') {
+                    createCard.style.display = 'none';
+                }
+                
+                document.getElementById('projectsBody').innerHTML = data.projects.map(p => `
+                    <tr>
+                        <td>${p.id}</td><td>${p.name}</td><td>${p.deadline || '—'}</td>
+                        <td>${new Date().toLocaleDateString('ru')}</td>
+                        <td>${currentUser.role === 'director' ? `<button class="btn btn-warning btn-sm" onclick="archiveProject(${p.id})"><span class="material-icons" style="font-size:14px">archive</span> Архив</button>` : '—'}</td>
+                    </tr>
+                `).join('') || '<tr><td colspan="5" style="text-align:center">Нет проектов</td></tr>';
+            } catch (e) { toast('Ошибка', 'error'); }
+        }
+        async function createProject() {
+            const name = document.getElementById('projName').value.trim();
+            const deadline = document.getElementById('projDeadline').value;
+            if (!name) return toast('Введите название', 'error');
+            try {
+                const res = await fetch(`${API}/projects`, {method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}, body: JSON.stringify({name, deadline})});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Проект создан', 'success');
+                document.getElementById('projName').value = '';
+                document.getElementById('projDeadline').value = '';
+                loadProjects();
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        function archiveProject(projectId) {
+            showConfirmModal('Архивировать проект', 'Проект будет перемещён в архив. Все его заявки исчезнут из общего списка.', async () => {
+                try {
+                    const res = await fetch(`${API}/projects/${projectId}/archive`, {method: 'POST', headers: {'Authorization': `Bearer ${token}`}});
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                    toast('Проект архивирован', 'success');
+                    loadProjects();
+                    loadArchivedProjectIds();
+                } catch (e) { toast(e.message, 'error'); }
+            });
+        }
+        async function loadArchiveProjects() {
+            try {
+                const res = await fetch(`${API}/projects/archive`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                if (data.projects.length === 0) {
+                    document.getElementById('archiveProjectsList').innerHTML = '<p style="text-align:center;color:var(--text-secondary)">📦 Архив пуст</p>';
+                    return;
+                }
+                document.getElementById('archiveProjectsList').innerHTML = data.projects.map(p => `
+                    <div class="archive-project">
+                        <div class="archive-project-info">
+                            <h4>📁 ${p.name}</h4>
+                            <p>Срок: ${p.deadline || '—'} | Создан: ${new Date(p.created_at).toLocaleDateString('ru')}</p>
+                            <button class="btn btn-sm" onclick="viewArchiveRequests(${p.id}, '${p.name.replace(/'/g, "\\'")}')"><span class="material-icons" style="font-size:14px">visibility</span> Просмотреть заявки</button>
+                        </div>
+                        ${currentUser.role === 'director' ? `<button class="btn btn-danger btn-sm" onclick="deleteProject(${p.id}, '${p.name.replace(/'/g, "\\'")}')"><span class="material-icons" style="font-size:14px">delete</span> Удалить</button>` : ''}
+                    </div>
+                `).join('');
+            } catch (e) { toast('Ошибка', 'error'); }
+        }
+        function deleteProject(projectId, projectName) {
+            showConfirmModal('Удалить проект', `Проект "${projectName}" и все его заявки будут безвозвратно удалены!`, async () => {
+                try {
+                    const res = await fetch(`${API}/projects/${projectId}`, {method: 'DELETE', headers: {'Authorization': `Bearer ${token}`}});
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                    toast('Проект удалён', 'success');
+                    loadArchiveProjects();
+                    loadArchivedProjectIds();
+                } catch (e) { toast(e.message, 'error'); }
+            });
+        }
+        async function viewArchiveRequests(projectId, projectName) {
+            try {
+                const res = await fetch(`${API}/requests?project_id=${projectId}`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                let html = `<h4>📁 Заявки в "${projectName}"</h4>`;
+                if (data.requests.length === 0) html += '<p style="color:var(--text-secondary)">Нет заявок</p>';
+                else {
+                    html += '<table class="requests-table"><thead><tr><th>№</th><th>Автор</th><th>Статус</th><th>Срок</th></tr></thead><tbody>';
+                    data.requests.forEach(r => {
+                        html += `<tr class="clickable" onclick="showRequestDetails('${r.req_id}')">
+                            <td><b>${r.req_id}</b></td><td>${r.author_name}</td>
+                            <td><span class="status-badge ${getStatusClass(r.status)}">${r.status}</span></td>
+                            <td>${r.deadline || '—'}</td></tr>`;
+                    });
+                    html += '</tbody></table>';
+                }
+                document.getElementById('detailsTitle').textContent = 'Архивные заявки';
+                document.getElementById('detailsContent').innerHTML = html;
+                document.getElementById('detailsModal').classList.add('active');
+            } catch (e) { toast('Ошибка', 'error'); }
+        }
+
+        // ===== REQUESTS =====
+        async function loadRequests() {
+            try {
+                const res = await fetch(`${API}/requests`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                allRequests = data.requests;
+                renderRequests();
+            } catch (e) { toast('Ошибка', 'error'); }
+        }
+        function setFilter(filter, btn) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderRequests();
+        }
+        
+        function isUrgent(deadline) {
+            if (!deadline) return false;
+            const dl = new Date(deadline);
+            const now = new Date();
+            const diffDays = Math.ceil((dl - now) / (1000 * 60 * 60 * 24));
+            return diffDays <= 7 && diffDays >= 0;
+        }
+        
+        function renderRequests() {
+            let filtered = allRequests.filter(r => !archivedProjectIds.includes(r.project_id));
+            if (currentFilter === 'in_progress') filtered = filtered.filter(r => r.status === 'Выполняется');
+            document.getElementById('requestsBody').innerHTML = filtered.map(r => {
+                const urgent = isUrgent(r.deadline);
+                const executor = procurementUsers.find(u => u.id === r.executor_id);
+                const executorName = executor ? executor.name : '—';
+                return `
+                <tr class="clickable" onclick="showRequestDetails('${r.req_id}')">
+                    <td><b>${r.req_id}</b>${urgent ? '<span class="urgent-badge">СРОЧНО</span>' : ''}</td>
+                    <td>${r.project_name}</td>
+                    <td>${r.author_name}</td>
+                    <td>${executorName}</td>
+                    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${r.body}</td>
+                    <td>${r.estimated_cost ? r.estimated_cost.toLocaleString('ru-RU') + ' ₽' : '—'}</td>
+                    <td><span class="status-badge ${getStatusClass(r.status)}">${r.status}</span></td>
+                    <td>${r.deadline || '—'}</td>
+                    <td onclick="event.stopPropagation()">${getActions(r)}</td>
+                </tr>`;
+            }).join('') || '<tr><td colspan="9" style="text-align:center">Нет заявок</td></tr>';
+        }
+        
+        function getPriorityName(p) { return {low: 'Низкий', medium: 'Средний', high: 'Высокий'}[p] || p; }
+        function getStatusClass(s) {
+            if (s.includes('рассмотрение')) return 'status-new';
+            if (s.includes('Выполняется')) return 'status-progress';
+            if (s.includes('Оплачено') || s.includes('Договорённость')) return 'status-approved';
+            if (s.includes('Отклонено')) return 'status-rejected';
+            return '';
+        }
+        function getActions(r) {
+            const role = currentUser.role;
+            const status = r.status;
+            let btns = '';
+            if (status === 'Отправлено на рассмотрение' && role === 'procurement') {
+                btns += `<button class="btn btn-sm" onclick="openStatusModal('${r.req_id}','Выполняется')">В работу</button> `;
+                btns += `<button class="btn btn-danger btn-sm" onclick="openStatusModal('${r.req_id}','Отклонено')">Отклонить</button>`;
+            }
+            if (status === 'Выполняется' && role === 'director') {
+                btns += `<button class="btn btn-success btn-sm" onclick="openStatusModal('${r.req_id}','Оплачено')">Оплачено</button> `;
+                btns += `<button class="btn btn-success btn-sm" onclick="openStatusModal('${r.req_id}','Договорённость')">Договор</button> `;
+                btns += `<button class="btn btn-danger btn-sm" onclick="openStatusModal('${r.req_id}','Отклонено')">Отклонить</button>`;
+            }
+            if (status === 'Отправлено на рассмотрение' && (role === 'client' || role === 'director')) {
+                btns += `<button class="btn btn-danger btn-sm" onclick="openStatusModal('${r.req_id}','Отклонено')">Отклонить</button>`;
+            }
+            return btns || '—';
+        }
+        
+        async function showRequestDetails(reqId) {
+            try {
+                const res = await fetch(`${API}/requests/${reqId}/details`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                const urgent = isUrgent(data.deadline);
+                let html = `
+                    <div style="background:var(--accent-light);padding:16px;border-radius:8px;margin-bottom:20px">
+                        <h4 style="color:var(--accent);margin-bottom:12px">${data.req_id} ${urgent ? '<span class="urgent-badge">СРОЧНО</span>' : ''}</h4>
+                        <p><b>Проект:</b> ${data.project_name}</p>
+                        <p><b>Автор:</b> ${data.author_name}</p>
+                        <p><b>Исполнитель:</b> ${data.executor_name}</p>
+                        <p><b>Приоритет:</b> <span class="priority-${data.priority}">${getPriorityName(data.priority)}</span></p>
+                        <p><b>Статус:</b> <span class="status-badge ${getStatusClass(data.status)}">${data.status}</span></p>
+                        <p><b>Срок:</b> ${data.deadline || '—'}</p>
+                        <p><b>Ориентировочная стоимость:</b> ${data.estimated_cost ? data.estimated_cost.toLocaleString('ru-RU') + ' ₽' : '—'}</p>
+                        ${data.director_cost ? `<p><b>Стоимость от руководителя:</b> <b style="color:var(--accent)">${data.director_cost.toLocaleString('ru-RU')} ₽</b></p>` : ''}
+                        <p><b>Создана:</b> ${data.created_date}</p>
+                        ${data.comment ? `<p><b>Комментарий:</b> ${data.comment}</p>` : ''}
+                        <hr style="margin:12px 0;border:0;border-top:1px solid var(--table-border)">
+                        <p><b>Описание:</b></p>
+                        <p style="background:var(--card-bg);padding:12px;border-radius:4px;border-left:4px solid var(--accent)">${data.body}</p>
+                    </div>
+                    <h4 style="color:var(--accent);margin-bottom:12px">📅 История изменений</h4>
+                    <div class="audit-timeline">`;
+                data.audit.forEach(entry => {
+                    let itemClass = '';
+                    if (entry.new_status === 'Оплачено' || entry.new_status === 'Договорённость') itemClass = 'success';
+                    if (entry.new_status === 'Отклонено') itemClass = 'danger';
+                    html += `
+                        <div class="audit-item ${itemClass}">
+                            <div class="audit-time">${entry.timestamp}</div>
+                            <div class="audit-actor">${entry.actor}</div>
+                            <div class="audit-action">${entry.action}</div>
+                            <div>
+                                ${entry.old_status ? `<span style="background:var(--filter-bg);padding:2px 8px;border-radius:3px;font-size:11px">${entry.old_status}</span> → ` : ''}
+                                <span class="status-badge ${getStatusClass(entry.new_status)}">${entry.new_status}</span>
+                            </div>
+                            ${entry.comment ? `<div class="audit-comment">💬 ${entry.comment}</div>` : ''}
+                        </div>`;
+                });
+                html += '</div>';
+                document.getElementById('detailsTitle').textContent = `Детали ${data.req_id}`;
+                document.getElementById('detailsContent').innerHTML = html;
+                document.getElementById('detailsModal').classList.add('active');
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        
+        async function createRequest() {
+            const project_id = parseInt(document.getElementById('reqProject').value);
+            const body = document.getElementById('reqBody').value.trim();
+            const priority = document.getElementById('reqPriority').value;
+            const deadline = document.getElementById('reqDeadline').value;
+            const estimated_cost = parseFloat(document.getElementById('reqCost').value) || null;
+            const executor_id = parseInt(document.getElementById('reqExecutor').value) || null;
+            
+            if (!project_id || !body || !deadline) return toast('Заполните все обязательные поля', 'error');
+            
+            if (isUrgent(deadline)) {
+                const confirmMsg = `⚠️ Срок исполнения — менее 7 дней (${deadline}).\n\nПодтвердите отправку срочной заявки?`;
+                if (!confirm(confirmMsg)) return;
+            }
+            
+            try {
+                const res = await fetch(`${API}/requests`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+                    body: JSON.stringify({project_id, body, priority, deadline, estimated_cost, executor_id})
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Заявка отправлена', 'success');
+                document.getElementById('reqBody').value = '';
+                document.getElementById('reqCost').value = '';
+                loadRequests();
+            } catch (e) { toast(e.message, 'error'); }
+        }
+        
+        function openStatusModal(reqId, newStatus) {
+            document.getElementById('statusReqId').value = reqId;
+            document.getElementById('statusNew').innerHTML = `<option value="${newStatus}">${newStatus}</option>`;
+            document.getElementById('statusComment').value = '';
+            
+            const directorCostGroup = document.getElementById('directorCostGroup');
+            if (currentUser.role === 'director' && (newStatus === 'Оплачено' || newStatus === 'Договорённость')) {
+                directorCostGroup.style.display = 'block';
+                const req = allRequests.find(r => r.req_id === reqId);
+                document.getElementById('directorCostInput').value = req?.estimated_cost || '';
+            } else {
+                directorCostGroup.style.display = 'none';
+            }
+            
+            document.getElementById('statusModal').classList.add('active');
+        }
+        
+        function showConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            document.getElementById('confirmModal').classList.add('active');
+            document.getElementById('confirmBtn').onclick = () => { closeModal('confirmModal'); onConfirm(); };
+        }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        
+        async function updateStatus() {
+            const reqId = document.getElementById('statusReqId').value;
+            const new_status = document.getElementById('statusNew').value;
+            const comment = document.getElementById('statusComment').value.trim();
+            const director_cost = parseFloat(document.getElementById('directorCostInput').value) || null;
+            
+            try {
+                const res = await fetch(`${API}/requests/${reqId}/status`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+                    body: JSON.stringify({new_status, comment, director_cost})
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                toast('Статус обновлён', 'success');
+                closeModal('statusModal');
+                loadRequests();
+            } catch (e) { toast(e.message, 'error'); }
+        }
+
+        // ===== STATISTICS =====
+        async function loadStatistics() {
+            try {
+                const res = await fetch(`${API}/statistics`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                
+                document.getElementById('statsGrid').innerHTML = `
+                    <div class="stat-card approved">
+                        <h4>✅ Одобрено</h4>
+                        <div class="value">${data.approved.sum.toLocaleString('ru-RU')} ₽</div>
+                        <div class="count">${data.approved.count} заявок</div>
+                    </div>
+                    <div class="stat-card rejected">
+                        <h4>❌ Отклонено</h4>
+                        <div class="value">${data.rejected.sum.toLocaleString('ru-RU')} ₽</div>
+                        <div class="count">${data.rejected.count} заявок</div>
+                    </div>
+                    <div class="stat-card progress">
+                        <h4>🔧 В работе</h4>
+                        <div class="value">${data.in_progress.sum.toLocaleString('ru-RU')} ₽</div>
+                        <div class="count">${data.in_progress.count} заявок</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <h4>⏳ На рассмотрении</h4>
+                        <div class="value">${data.pending.sum.toLocaleString('ru-RU')} ₽</div>
+                        <div class="count">${data.pending.count} заявок</div>
+                    </div>
+                `;
+                
+                let details = `<h4 style="color:var(--accent);margin:20px 0 12px">📋 Детализация</h4>`;
+                
+                if (data.approved.items.length > 0) {
+                    details += `<h5 style="color:#28a745;margin-bottom:8px">✅ Одобрено:</h5><table class="requests-table"><thead><tr><th>№</th><th>Проект</th><th>Автор</th><th>Стоимость</th></tr></thead><tbody>`;
+                    data.approved.items.forEach(i => {
+                        details += `<tr><td>${i.req_id}</td><td>${i.project}</td><td>${i.author}</td><td><b>${i.cost.toLocaleString('ru-RU')} ₽</b></td></tr>`;
+                    });
+                    details += '</tbody></table>';
+                }
+                
+                if (data.rejected.items.length > 0) {
+                    details += `<h5 style="color:#dc3545;margin:16px 0 8px">❌ Отклонено:</h5><table class="requests-table"><thead><tr><th>№</th><th>Проект</th><th>Автор</th><th>Стоимость</th><th>Причина</th></tr></thead><tbody>`;
+                    data.rejected.items.forEach(i => {
+                        details += `<tr><td>${i.req_id}</td><td>${i.project}</td><td>${i.author}</td><td>${i.cost.toLocaleString('ru-RU')} ₽</td><td>${i.comment || '—'}</td></tr>`;
+                    });
+                    details += '</tbody></table>';
+                }
+                
+                document.getElementById('statsDetails').innerHTML = details;
+            } catch (e) { toast('Ошибка загрузки статистики', 'error'); }
+        }
+
+        // ===== USERS =====
+        async function loadUsers() {
+            try {
+                const res = await fetch(`${API}/users`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                document.getElementById('usersBody').innerHTML = data.users.map(u => {
+                    const canDelete = u.role !== 'director' && u.id !== currentUser.id;
+                    return `
+                    <tr>
+                        <td>${u.id}</td>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
+                        <td><span class="badge" style="background:var(--badge-bg);color:var(--badge-text);padding:3px 10px;border-radius:12px;font-size:11px">${getRoleName(u.role)}</span></td>
+                        <td>${u.verified ? '✅' : '⏳'}</td>
+                        <td>${canDelete ? `<button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id}, '${u.name.replace(/'/g, "\\'")}')"><span class="material-icons" style="font-size:14px">delete</span> Удалить</button>` : '—'}</td>
+                    </tr>`;
+                }).join('') || '<tr><td colspan="6" style="text-align:center">Нет пользователей</td></tr>';
+            } catch (e) { toast('Ошибка', 'error'); }
+        }
+        
+        function deleteUser(userId, userName) {
+            showConfirmModal('Удалить пользователя', `Пользователь "${userName}" и все его заявки будут безвозвратно удалены!`, async () => {
+                try {
+                    const res = await fetch(`${API}/users/${userId}`, {method: 'DELETE', headers: {'Authorization': `Bearer ${token}`}});
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.detail || 'Ошибка');
+                    toast('Пользователь удалён', 'success');
+                    loadUsers();
+                    loadProcurementUsers();
+                } catch (e) { toast(e.message, 'error'); }
+            });
+        }
+
+        // ===== NOTIFICATIONS =====
+        async function loadNotifications() {
+            try {
+                const res = await fetch(`${API}/notifications/unread`, {headers: {'Authorization': `Bearer ${token}`}});
+                const data = await res.json();
+                const badge = document.getElementById('notifCount');
+                if (data.count > 0) { badge.textContent = data.count; badge.style.display = 'flex'; }
+                else badge.style.display = 'none';
+                document.getElementById('notifDropdown').innerHTML = data.notifications.map(n => `
+                    <div class="notification-item ${n.read ? '' : 'unread'}">
+                        <div class="title">${n.title}</div>
+                        <div class="message">${n.message}</div>
+                        <div class="time">${new Date(n.created_at).toLocaleString('ru')}</div>
+                    </div>
+                `).join('') || '<div class="notification-item">Нет уведомлений</div>';
+            } catch (e) { console.error(e); }
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            dropdown.classList.toggle('active');
+            if (dropdown.classList.contains('active')) {
+                fetch(`${API}/notifications/read`, {method: 'POST', headers: {'Authorization': `Bearer ${token}`}});
+                setTimeout(() => document.getElementById('notifCount').style.display = 'none', 500);
+            }
+        }
+
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            ['requestsContent','projectsContent','archiveContent','statisticsContent','usersContent'].forEach(id => document.getElementById(id).style.display = 'none');
+            
+            if (tab === 'requests') document.getElementById('requestsContent').style.display = 'block';
+            else if (tab === 'projects') document.getElementById('projectsContent').style.display = 'block';
+            else if (tab === 'archive') { document.getElementById('archiveContent').style.display = 'block'; loadArchiveProjects(); }
+            else if (tab === 'statistics') { document.getElementById('statisticsContent').style.display = 'block'; loadStatistics(); }
+            else if (tab === 'users') { document.getElementById('usersContent').style.display = 'block'; loadUsers(); }
+        }
+
+        function toast(msg, type = 'info') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast ${type}`;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.notification-bell')) document.getElementById('notifDropdown').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
